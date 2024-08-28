@@ -1,7 +1,11 @@
-import React from "react";
+import { NewCourse } from "@/components/NewCourse/page";
 
 function Home() {
-  return <div>Home</div>;
+  return (
+    <main className="container mx-auto">
+      <NewCourse />
+    </main>
+  );
 }
 
 export default Home;
