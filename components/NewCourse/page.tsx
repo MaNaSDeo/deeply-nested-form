@@ -1,4 +1,4 @@
-import styles from "./NewCourse.module.css";
+import styles from './NewCourse.module.css';
 
 export const NewCourse = () => {
   return (
@@ -39,7 +39,7 @@ const ManageChapters = () => {
       {/* Loop through chapter fields */}
       <div className="p-6 bg-gray-200 shadow-lg rounded-lg space-y-3">
         <div className="flex justify-between">
-          <div className="text-lg mb-2 font-semibold">Chapters</div>{" "}
+          <div className="text-lg mb-2 font-semibold">Chapters</div>{' '}
           <button
             type="button"
             className="text-red-400 text-xs underline underline-offset-4"
@@ -48,7 +48,7 @@ const ManageChapters = () => {
           </button>
         </div>
 
-        <label title={"Title"}>
+        <label title={'Title'}>
           <div className="mb-1">Chapter title</div>
           <input
             className="border-2 border-gray-600  rounded-lg px-2 py-1 bg-transparent"
@@ -87,7 +87,7 @@ const ManageNotes = ({ chapterIndex }: { chapterIndex: number }) => {
               Remove note
             </button>
           </div>
-          <label title={"Title"} className="inline-block">
+          <label title={'Title'} className="inline-block">
             <div className="mb-1">Content</div>
             <input
               placeholder="Enter note"

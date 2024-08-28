@@ -1,4 +1,4 @@
-import { NewCourse } from "@/components/NewCourse/page";
+import { NewCourse } from '@/components/NewCourse/page';
 
 function Home() {
   return (
