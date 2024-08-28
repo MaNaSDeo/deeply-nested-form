@@ -6,19 +6,27 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier \"{app,components,styles}/**/*.{ts,tsx,js,json}\" --ignore-path .gitignore",
+    "format:check": "yarn run format -- --check",
+    "format:write": "yarn run format -- --write",
+    "tsc": "tsc --noEmit",
+    "validate": "yarn run format:write && yarn run tsc && yarn run lint && yarn run build",
+    "prepare": "husky install"
   },
   "dependencies": {
+    "next": "14.2.7",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.7"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.7"
+    "eslint-config-next": "14.2.7",
+    "husky": "^9.1.5",
+    "prettier": "^3.3.3",
+    "typescript": "^5"
   }
 }
