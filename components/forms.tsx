@@ -1,24 +1,26 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, useFormContext } from "react-hook-form";
-import { z } from "zod";
-import { type ReactNode } from "react";
+'use client';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm, useFormContext } from 'react-hook-form';
+import { z } from 'zod';
+import { type ReactNode } from 'react';
 
 /**
  * Schemas
  */
 
 export const schemaNote = z.object({
-  content: z.string(),
+  content: z.string().min(2),
 });
 
 export const schemaChapter = z.object({
   title: z.string(),
-  notes: z.array(schemaNote),
+  notes: z.array(schemaNote).min(1),
 });
 
 export const schemaCreateCourse = z.object({
-  title: z.string(),
-  chapters: z.array(schemaChapter),
+  title: z.string().min(2),
+  chapters: z.array(schemaChapter).min(1),
 });
 
 /**
@@ -45,6 +47,5 @@ export const FormProviderCreateCourse = ({
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-export const useFormContextCreateCourse = () => {
+export const useFormContextCreateCourse = () =>
   useFormContext<FormTypeCreateCourse>();
-};

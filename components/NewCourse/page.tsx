@@ -1,25 +1,54 @@
-import styles from './NewCourse.module.css';
+'use client';
+
+import { useFieldArray } from 'react-hook-form';
+import { FormProviderCreateCourse, useFormContextCreateCourse } from '../forms';
 
 export const NewCourse = () => {
+  return (
+    <FormProviderCreateCourse>
+      <NewCourseContent />
+    </FormProviderCreateCourse>
+  );
+};
+
+export const NewCourseContent = () => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+    handleSubmit,
+  } = useFormContextCreateCourse();
+
+  const formData = watch();
+  console.log('data', { formData, errors });
+
   return (
     <div>
       <div className="p-6 bg-gray-300 shadow-sm rounded-lg">
         <div className="text-xl mb-2 font-bold">New Course</div>
-        <form className="space-y-3">
+        <form
+          className="space-y-3"
+          onSubmit={handleSubmit((data) => {
+            console.log('Form submitted: ', data);
+          })}
+        >
           <label title="Title">
             <div className="mb-1">Title</div>
             <input
               placeholder="Enter course title"
               className="border-2 border-gray-600  rounded-lg px-2 py-1 bg-transparent"
               // Register: course title
+              {...register('title')}
             />
             <div className="text-red-600 text-sm mt-1">
               {/* Error: Course title */}
+              {errors.title?.message}
             </div>
           </label>
           <ManageChapters />
           <div className="text-red-600 text-sm mt-1">
             {/* Error: Course chapters */}
+            {errors.chapters?.message}
           </div>
           <button
             className="px-4 py-2 bg-blue-600 rounded-lg text-white"
@@ -34,37 +63,64 @@ export const NewCourse = () => {
 };
 
 const ManageChapters = () => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+    control,
+  } = useFormContextCreateCourse();
+
+  const { append, remove, fields } = useFieldArray({
+    name: 'chapters',
+    control,
+  });
+
   return (
     <div className="space-y-4">
       {/* Loop through chapter fields */}
-      <div className="p-6 bg-gray-200 shadow-lg rounded-lg space-y-3">
-        <div className="flex justify-between">
-          <div className="text-lg mb-2 font-semibold">Chapters</div>{' '}
-          <button
-            type="button"
-            className="text-red-400 text-xs underline underline-offset-4"
-          >
-            Remove chapter
-          </button>
-        </div>
+      {fields.map((chapter, chapterIndex) => {
+        return (
+          <div className="p-6 bg-gray-200 shadow-lg rounded-lg space-y-3">
+            <div className="flex justify-between">
+              <div className="text-lg mb-2 font-semibold">Chapters</div>{' '}
+              <button
+                type="button"
+                className="text-red-400 text-xs underline underline-offset-4"
+                onClick={() => remove(chapterIndex)}
+              >
+                Remove chapter
+              </button>
+            </div>
 
-        <label title={'Title'}>
-          <div className="mb-1">Chapter title</div>
-          <input
-            className="border-2 border-gray-600  rounded-lg px-2 py-1 bg-transparent"
-            placeholder="Enter chapter title..."
-            // Register: chapter title
-          />
-          <div className="text-red-600">{/* Error: Chapter title */}</div>
-        </label>
-        <ManageNotes chapterIndex={1} />
-        <div className="text-red-600 text-sm mt-1">
-          {/* Error: Chapter notes */}
-        </div>
-      </div>
+            <label title={'Title'}>
+              <div className="mb-1">Chapter title</div>
+              <input
+                className="border-2 border-gray-600  rounded-lg px-2 py-1 bg-transparent"
+                placeholder="Enter chapter title..."
+                // Register: chapter title
+                {...register(`chapters.${chapterIndex}.title`)}
+              />
+              <div className="text-red-600">
+                {
+                  /* Error: Chapter title */
+                  errors.chapters?.[chapterIndex]?.title?.message
+                }
+              </div>
+            </label>
+            <ManageNotes chapterIndex={1} />
+            <div className="text-red-600 text-sm mt-1">
+              {/* Error: Chapter notes */}
+            </div>
+          </div>
+        );
+      })}
+
       <button
         type="button"
         className="text-gray-600 text-center w-full underline underline-offset-4 py-2"
+        onClick={() => {
+          append({ notes: [], title: '' });
+        }}
       >
         add chapter
       </button>
