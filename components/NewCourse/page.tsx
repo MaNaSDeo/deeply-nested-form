@@ -20,7 +20,6 @@ export const NewCourseContent = () => {
   } = useFormContextCreateCourse();
 
   const formData = watch();
-  console.log('data', { formData, errors });
 
   return (
     <div>
@@ -36,11 +35,11 @@ export const NewCourseContent = () => {
             <div className="mb-1">Title</div>
             <input
               placeholder="Enter course title"
-              className="border-2 border-gray-600  rounded-lg px-2 py-1 bg-transparent"
+              className="border-2 border-gray-600 rounded-lg px-2 py-1 bg-transparent"
               // Register: course title
               {...register('title')}
             />
-            <div className="text-red-600 text-sm mt-1">
+            <div className="text-red-600 text-xs mt-1">
               {/* Error: Course title */}
               {errors.title?.message}
             </div>
